@@ -1,0 +1,9 @@
+.dashboard{
+    width: 80%; /* Adjust to your preference */
+    border: 1px solid black; /* Simple border */
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    column-gap: 1.6rem;
+    margin: 0 auto;
+} 
