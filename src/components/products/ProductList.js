@@ -1,4 +1,5 @@
 import React from 'react'
+import classes from './ProductList.module.css'
 
 const ProductList = () => {
     const data = {
@@ -50,7 +51,8 @@ const ProductList = () => {
         ]
     };
   return (
-    <div>
+    <div className={`${classes}`}>
+        <h1>Product List</h1>
       <table>
         <thead>
             <tr>

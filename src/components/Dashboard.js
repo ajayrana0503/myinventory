@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './Dashbord.module.css'
 import ProductForm from './products/ProductForm'
-import ProductList from './products/Product'
+import ProductList from './products/ProductList'
 
 const Dashboard = () => {
   return (
