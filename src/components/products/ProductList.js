@@ -51,8 +51,8 @@ const ProductList = () => {
         ]
     };
   return (
-    <div className={`${classes}`}>
-        <h1>Product List</h1>
+    <div className={classes.productlist}>
+        <h2>Product List</h2>
       <table>
         <thead>
             <tr>
@@ -72,8 +72,8 @@ const ProductList = () => {
                         <td>{product.name}</td>
                         <td>{product.price}</td>
                         <td>{product.quantity}</td>
-                        <td>{product.description}</td>
                         <td>{product.expiryDate}</td>
+                        <td>{product.description}</td>
                      
                     </tr>
                 ))}
