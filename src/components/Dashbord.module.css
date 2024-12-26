@@ -1,9 +1,59 @@
-.dashboard{
-    width: 80%; /* Adjust to your preference */
+.dashboardContainer {
+    width: 90%; /* Adjust to your preference */
     border: 1px solid black; /* Simple border */
     padding: 0.5rem;
-    text-align: center;
     display: flex;
-    column-gap: 1.6rem;
+    flex-direction: column;
     margin: 0 auto;
-} 
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.left {
+    flex: 1;
+    text-align: left;
+}
+
+.right {
+    flex: 1;
+    text-align: right;
+}
+
+.logoutButton {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.logoutButton:hover {
+    background-color: #c82333;
+}
+
+.divider {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.dashboardContent {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.6rem;
+}
+
+.formContainer {
+    flex: 1;
+}
+
+.listContainer {
+    flex: 1;
+}

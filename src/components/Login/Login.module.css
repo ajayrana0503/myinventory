@@ -1,5 +1,5 @@
 .formContainer {
-    max-width: 100%; /* Adjust to fit within the flex container */
+    max-width: 400px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
