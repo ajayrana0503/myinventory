@@ -8,7 +8,6 @@ const Login = ({ onLoginSuccess, onRegisterClick }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     // Handle login logic here
-    e.preventDefault();
     const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (storedUser && storedUser.email === email && storedUser.password === password) {

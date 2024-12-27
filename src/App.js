@@ -26,12 +26,17 @@ function App() {
 
   return (
     <div>
-      {/* <h1 className='heading'>Inventory App</h1> */}
       {currentPage === 'login' && (
+        <>
+        <h1 className='heading'>Inventory App</h1>
         <Login onLoginSuccess={handleLoginSuccess} onRegisterClick={handleRegisterClick} />
+        </>
       )}
       {currentPage === 'register' && (
+        <>
+        <h1 className='heading'>Inventory App</h1>
         <Register onRegisterSuccess={handleRegisterSuccess} />
+        </>
       )}
       {currentPage === 'dashboard' && (
         <Dashboard onLogout={handleLogout} />
