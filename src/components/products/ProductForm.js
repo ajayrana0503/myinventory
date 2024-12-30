@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './ProductForm.module.css'
 
-const ProductForm = () => {
+const ProductForm = ({ onAddProduct }) => {
   const [formValues, setFormValues] = useState({
     productName: '',
     productPrice: '',
@@ -16,12 +16,33 @@ const ProductForm = () => {
       ...formValues,
       [name]: value
     })
-    console.log(formValues)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formValues)
+    const price = parseFloat(formValues.productPrice)
+    const quantity = parseInt(formValues.productQuantity, 10)
+
+    if (isNaN(price) || isNaN(quantity)) {
+      alert('Please enter valid numbers for price and quantity.')
+      return
+    }
+
+    onAddProduct({
+      id: Date.now(),
+      name: formValues.productName,
+      price: price,
+      quantity: quantity,
+      expiryDate: formValues.expiryDate,
+      description: formValues.description
+    })
+    setFormValues({
+      productName: '',
+      productPrice: '',
+      productQuantity: '',
+      expiryDate: '',
+      description: ''
+    })
   }
 
   return (
