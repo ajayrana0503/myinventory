@@ -1,0 +1,49 @@
+
+.dashboardContainer {
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.left h2 {
+  margin: 0;
+  color: #333;
+}
+
+.right .logoutButton {
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.right .logoutButton:hover {
+  background-color: #c82333;
+}
+
+.divider {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+
+.dashboardContent {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.formContainer, .listContainer {
+  flex: 1;
+}
