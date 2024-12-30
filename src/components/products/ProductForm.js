@@ -2,24 +2,26 @@ import React, { useState } from 'react'
 import classes from './ProductForm.module.css'
 
 const ProductForm = () => {
-  // State variables to hold form input values
-  const [productName, setProductName] = useState('')
-  const [productPrice, setProductPrice] = useState('')
-  const [productQuantity, setProductQuantity] = useState('')
-  const [expiryDate, setExpiryDate] = useState('')
-  const [description, setDescription] = useState('')
+  const [formValues, setFormValues] = useState({
+    productName: '',
+    productPrice: '',
+    productQuantity: '',
+    expiryDate: '',
+    description: ''
+  })
 
-  // Function to handle form submission
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormValues({
+      ...formValues,
+      [name]: value
+    })
+    console.log(formValues)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle form submission logic here
-    console.log({
-      productName,
-      productPrice,
-      productQuantity,
-      expiryDate,
-      description
-    })
+    console.log(formValues)
   }
 
   return (
@@ -30,44 +32,49 @@ const ProductForm = () => {
           <label className={classes.formLabel}>Product Name</label>
           <input
             type="text"
+            name="productName"
             className={classes.formInput}
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
+            value={formValues.productName}
+            onChange={handleChange}
           />
         </div>
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Product Price</label>
           <input
             type="text"
+            name="productPrice"
             className={classes.formInput}
-            value={productPrice}
-            onChange={(e) => setProductPrice(e.target.value)}
+            value={formValues.productPrice}
+            onChange={handleChange}
           />
         </div>
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Product Quantity</label>
           <input
             type="text"
+            name="productQuantity"
             className={classes.formInput}
-            value={productQuantity}
-            onChange={(e) => setProductQuantity(e.target.value)}
+            value={formValues.productQuantity}
+            onChange={handleChange}
           />
         </div>
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Expiry Date</label>
           <input
             type="date"
+            name="expiryDate"
             className={classes.formInput}
-            value={expiryDate}
-            onChange={(e) => setExpiryDate(e.target.value)}
+            value={formValues.expiryDate}
+            onChange={handleChange}
           />
         </div>
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Description</label>
           <textarea
+            name="description"
             className={classes.formInput}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={formValues.description}
+            onChange={handleChange}
           />
         </div>
         <button type="submit" className={classes.submitButton}>Add Product</button>

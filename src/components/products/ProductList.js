@@ -72,8 +72,10 @@ const ProductList = () => {
                         <td>{product.name}</td>
                         <td>{product.price}</td>
                         <td>{product.quantity}</td>
-                        <td>{product.expiryDate}</td>
-                        <td>{product.description}</td>
+                        <td>{new Date(product.expiryDate).toLocaleDateString('en-GB')}</td>
+                        <td>
+                        {product.description.length > 15 ? `${product.description.substring(0, 15)}...` : product.description}
+                        </td>
                      
                     </tr>
                 ))}
