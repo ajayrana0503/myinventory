@@ -15,6 +15,29 @@
   color: #333;
 }
 
+.filterContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filterContainer label {
+  margin-right: 0.5rem;
+}
+
+.filterContainer select {
+  margin-right: 0.5rem;
+  padding: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.tableContainer {
+  max-height: 400px; /* Set a fixed height for the table container */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
 table {
   width: 100%;
   margin: 0 auto;
@@ -42,29 +65,74 @@ tbody tr:hover {
 }
 
 .listContainer {
-    max-width: 100%; /* Adjust to fit within the flex container */
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  
-  .listItem {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .listItem:last-child {
-    border-bottom: none;
-  }
-  
-  .listItem h3 {
-    margin: 0;
-    font-size: 18px;
-  }
-  
-  .listItem p {
-    margin: 5px 0 0;
-    font-size: 14px;
-  }
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.listItem {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.listItem:last-child {
+  border-bottom: none;
+}
+
+.listItem h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.listItem p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #f1f1f1;
+}
+
+.pagination .active {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+.tableContainer::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.tableContainer::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color of the scrollbar track */
+  border-radius: 10px; /* Roundness of the scrollbar track */
+}
+
+.tableContainer::-webkit-scrollbar-thumb {
+  background-color: #4caf50; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Roundness of the scrollbar thumb */
+  border: 3px solid #f1f1f1; /* Padding around the scrollbar thumb */
+}
+
+.tableContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #45a049; /* Color of the scrollbar thumb on hover */
+}
