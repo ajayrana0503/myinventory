@@ -4,6 +4,7 @@ import classes from './ProductList.module.css'
 const ProductList = ({ products }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage, setProductsPerPage] = useState(5)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
@@ -14,26 +15,46 @@ const ProductList = ({ products }) => {
     setCurrentPage(1)
   }
 
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value)
+    setCurrentPage(1)
+  }
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
   const indexOfLastProduct = currentPage * productsPerPage
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct)
-  const totalPages = Math.ceil(products.length / productsPerPage)
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
 
   return (
     <div className={classes.productlist}>
       <h2>Product List</h2>
-      <div className={classes.filterContainer}>
-        <label htmlFor="productsPerPage">Show</label>
-        <select
-          id="productsPerPage"
-          value={productsPerPage}
-          onChange={handleProductsPerPageChange}
-        >
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={15}>15</option>
-        </select>
-        <span>products per page</span>
+      <div className={classes.controlsContainer}>
+        <div className={classes.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className={classes.searchInput}
+          />
+        </div>
+        <div className={classes.filterContainer}>
+          <label htmlFor="productsPerPage">Show</label>
+          <select
+            id="productsPerPage"
+            value={productsPerPage}
+            onChange={handleProductsPerPageChange}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+          </select>
+          <span>products per page</span>
+        </div>
       </div>
       <div className={classes.tableContainer}>
         <table>

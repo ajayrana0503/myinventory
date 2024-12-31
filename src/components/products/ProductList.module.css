@@ -15,11 +15,28 @@
   color: #333;
 }
 
-.filterContainer {
+.controlsContainer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.searchContainer {
+  flex: 1;
+}
+
+.searchInput {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+  max-width: 300px;
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
 }
 
 .filterContainer label {
