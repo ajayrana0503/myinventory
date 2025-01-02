@@ -46,10 +46,24 @@ const Dashboard = ({ onLogout }) => {
       expiryDate: "2025-05-12"
     }
   ])
+  const [editingProduct, setEditingProduct] = useState(null)
 
   const handleAddProduct = (newProduct) => {
-    const nextId = products.length > 0 ? products[products.length - 1].id + 1 : 1
-    setProducts([...products, { ...newProduct, id: nextId }])
+    if (editingProduct) {
+      setProducts(products.map(product => product.id === editingProduct.id ? newProduct : product))
+      setEditingProduct(null)
+    } else {
+      const nextId = products.length > 0 ? products[products.length - 1].id + 1 : 1
+      setProducts([...products, { ...newProduct, id: nextId }])
+    }
+  }
+
+  const handleEditProduct = (product) => {
+    setEditingProduct(product)
+  }
+
+  const handleDeleteProduct = (productId) => {
+    setProducts(products.filter(product => product.id !== productId))
   }
 
   return (
@@ -65,10 +79,10 @@ const Dashboard = ({ onLogout }) => {
       <hr className={classes.divider} />
       <div className={classes.dashboardContent}>
         <div className={classes.formContainer}>
-          <ProductForm onAddProduct={handleAddProduct} />
+          <ProductForm onAddProduct={handleAddProduct} editingProduct={editingProduct} />
         </div>
         <div className={classes.listContainer}>
-          <ProductList products={products} />
+          <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         </div>
       </div>
     </div>

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import classes from './ProductForm.module.css'
 import ErrorModal from '../ErrorModal'
 
-const ProductForm = ({ onAddProduct }) => {
+const ProductForm = ({ onAddProduct, editingProduct }) => {
   const [formValues, setFormValues] = useState({
     productName: '',
     productPrice: '',
@@ -12,6 +12,18 @@ const ProductForm = ({ onAddProduct }) => {
   })
 
   const [errors, setErrors] = useState({})
+
+  useEffect(() => {
+    if (editingProduct) {
+      setFormValues({
+        productName: editingProduct.name,
+        productPrice: editingProduct.price,
+        productQuantity: editingProduct.quantity,
+        expiryDate: editingProduct.expiryDate,
+        description: editingProduct.description
+      })
+    }
+  }, [editingProduct])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -63,7 +75,7 @@ const ProductForm = ({ onAddProduct }) => {
     }
 
     onAddProduct({
-      id: Date.now(),
+      id: editingProduct ? editingProduct.id : Date.now(),
       name: productName,
       price: parseFloat(productPrice),
       quantity: parseInt(productQuantity, 10),
@@ -87,7 +99,7 @@ const ProductForm = ({ onAddProduct }) => {
   return (
     <div className={classes.formContainer}>
       {Object.keys(errors).length > 0 && <ErrorModal message={errors} onClose={closeModal} />}
-      <h2>Add New Product</h2>
+      <h2>{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>
       <form onSubmit={handleSubmit}>
         <div className={classes.formGroup}>
           <label className={classes.formLabel}>Product Name</label>
@@ -138,7 +150,7 @@ const ProductForm = ({ onAddProduct }) => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className={classes.submitButton}>Add Product</button>
+        <button type="submit" className={classes.submitButton}>{editingProduct ? 'Update Product' : 'Add Product'}</button>
       </form>
     </div>
   )

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './ProductList.module.css'
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onEditProduct, onDeleteProduct }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage, setProductsPerPage] = useState(5)
   const [searchQuery, setSearchQuery] = useState('')
@@ -66,6 +66,7 @@ const ProductList = ({ products }) => {
               <th>Product Quantity</th>
               <th>Expiry Date</th>
               <th>Description</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +79,10 @@ const ProductList = ({ products }) => {
                 <td>{new Date(product.expiryDate).toLocaleDateString('en-GB')}</td>
                 <td>
                   {product.description.length > 15 ? `${product.description.substring(0, 15)}...` : product.description}
+                </td>
+                <td>
+                  <button onClick={() => onEditProduct(product)}>Edit</button>
+                  <button onClick={() => onDeleteProduct(product.id)}>Delete</button>
                 </td>
               </tr>
             ))}
