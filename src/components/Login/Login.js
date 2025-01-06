@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './Login.module.css';
 
-const Login = ({ onLoginSuccess, onRegisterClick }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -12,12 +14,11 @@ const Login = ({ onLoginSuccess, onRegisterClick }) => {
 
     if (storedUser && storedUser.email === email && storedUser.password === password) {
       console.log('Login successful:', storedUser);
-      onLoginSuccess();
+      navigate('/dashboard');
     } else {
       console.log('Invalid email or password');
       alert('Invalid email or password');
     }
-
   };
 
   return (
@@ -44,9 +45,7 @@ const Login = ({ onLoginSuccess, onRegisterClick }) => {
         </div>
         <button type="submit" className={classes.submitButton}>Login</button>
       </form>
-      <p>
-        Not registered? <span onClick={onRegisterClick} className={classes.registerLink}>Click Here</span>
-      </p>
+      <Link to="/register" className={classes.registerLink}>Not registered? Register here</Link>
     </div>
   );
 };

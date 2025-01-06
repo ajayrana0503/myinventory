@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import classes from './Dashbord.module.css'
 import ProductForm from './products/ProductForm'
 import ProductList from './products/ProductList'
+import { AuthContext } from './AuthProvider'
 
-const Dashboard = ({ onLogout }) => {
+const Dashboard = () => {
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -47,6 +49,7 @@ const Dashboard = ({ onLogout }) => {
     }
   ])
   const [editingProduct, setEditingProduct] = useState(null)
+  const { setAuth } = useContext(AuthContext)
 
   const handleAddProduct = (newProduct) => {
     if (editingProduct) {
@@ -66,6 +69,10 @@ const Dashboard = ({ onLogout }) => {
     setProducts(products.filter(product => product.id !== productId))
   }
 
+  const handleLogout = () => {
+    setAuth(false)
+  }
+
   return (
     <div className={classes.dashboardContainer}>
       <div className={classes.header}>
@@ -73,7 +80,7 @@ const Dashboard = ({ onLogout }) => {
           <h2>Inventory</h2>
         </div>
         <div className={classes.right}>
-          <button onClick={onLogout} className={classes.logoutButton}>Logout</button>
+          <Link to="/login" className={classes.logoutButton} onClick={handleLogout}>Logout</Link>
         </div>
       </div>
       <hr className={classes.divider} />

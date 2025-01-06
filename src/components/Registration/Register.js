@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import classes from './Register.module.css';
+import { AuthContext } from '../AuthProvider';
 
-const Registration = ({ onRegisterSuccess }) => {
+const Registration = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -21,7 +25,8 @@ const Registration = ({ onRegisterSuccess }) => {
     };
     localStorage.setItem('user', JSON.stringify(userData));
     console.log(userData);
-    onRegisterSuccess();
+    setAuth(true);
+    navigate('/dashboard');
   };
 
   return (
