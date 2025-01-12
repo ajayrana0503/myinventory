@@ -1,37 +1,57 @@
-import React, { useState } from 'react'
-import classes from './ProductList.module.css'
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts, deleteProduct } from '../../redux/productSlice';
+import classes from './ProductList.module.css';
 
-const ProductList = ({ products, onEditProduct, onDeleteProduct }) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(5)
-  const [searchQuery, setSearchQuery] = useState('')
+const ProductList = ({ onEditProduct, onDeleteProduct }) => {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products || []); // Ensure products is an array
+  const productStatus = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (productStatus === 'idle') {
+      dispatch(fetchProducts());
+    }
+  }, [productStatus, dispatch]);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber)
-  }
+    setCurrentPage(pageNumber);
+  };
 
   const handleProductsPerPageChange = (e) => {
-    setProductsPerPage(Number(e.target.value))
-    setCurrentPage(1)
-  }
+    setProductsPerPage(Number(e.target.value));
+    setCurrentPage(1); // Reset to first page
+  };
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value)
-    setCurrentPage(1)
-  }
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page
+  };
 
-  const filteredProducts = products.filter(product =>
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId));
+    onDeleteProduct(productId);
+  };
+
+  const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  );
 
-  const indexOfLastProduct = currentPage * productsPerPage
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   return (
     <div className={classes.productlist}>
       <h2>Product List</h2>
+      {productStatus === 'loading' && <div>Loading...</div>}
+      {productStatus === 'failed' && <div>{error}</div>}
       <div className={classes.controlsContainer}>
         <div className={classes.searchContainer}>
           <input
@@ -70,22 +90,30 @@ const ProductList = ({ products, onEditProduct, onDeleteProduct }) => {
             </tr>
           </thead>
           <tbody>
-            {currentProducts.map(product => (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td>{product.quantity}</td>
-                <td>{new Date(product.expiryDate).toLocaleDateString('en-GB')}</td>
-                <td>
-                  {product.description.length > 15 ? `${product.description.substring(0, 15)}...` : product.description}
-                </td>
-                <td>
-                  <button onClick={() => onEditProduct(product)}>Edit</button>
-                  <button onClick={() => onDeleteProduct(product.id)}>Delete</button>
-                </td>
+            {currentProducts.length > 0 ? (
+              currentProducts.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.id}</td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.quantity}</td>
+                  <td>{new Date(product.expiryDate).toLocaleDateString('en-GB')}</td>
+                  <td>
+                    {product.description && product.description.length > 15
+                      ? `${product.description.substring(0, 15)}...`
+                      : product.description}
+                  </td>
+                  <td>
+                    <button onClick={() => onEditProduct(product)}>Edit</button>
+                    <button onClick={() => handleDelete(product.id)}>Delete</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7">No products found</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
@@ -101,7 +129,7 @@ const ProductList = ({ products, onEditProduct, onDeleteProduct }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;

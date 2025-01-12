@@ -1,32 +1,23 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './Register.module.css';
-import { AuthContext } from '../AuthProvider';
 
-const Registration = () => {
+const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
-    // Handle registration logic here
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    const userData = {
-      name,
-      email,
-      password
-    };
-    localStorage.setItem('user', JSON.stringify(userData));
-    console.log(userData);
-    setAuth(true);
-    navigate('/dashboard');
+    const newUser = { name, email, password };
+    localStorage.setItem('user', JSON.stringify(newUser));
+    navigate('/login');
   };
 
   return (
@@ -71,8 +62,9 @@ const Registration = () => {
         </div>
         <button type="submit" className={classes.submitButton}>Register</button>
       </form>
+      <Link to="/login" className={classes.loginLink}>Already registered? Login here</Link>
     </div>
   );
 };
 
-export default Registration;
+export default Register;

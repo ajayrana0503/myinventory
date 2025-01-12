@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import classes from './Dashbord.module.css'
-import ProductForm from './products/ProductForm'
-import ProductList from './products/ProductList'
-import { AuthContext } from './AuthProvider'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../redux/authSlice';
+import classes from './Dashbord.module.css';
+import ProductForm from './products/ProductForm';
+import ProductList from './products/ProductList';
 
 const Dashboard = () => {
   const [products, setProducts] = useState([
@@ -47,31 +48,31 @@ const Dashboard = () => {
       description: "High precision gaming mouse.",
       expiryDate: "2025-05-12"
     }
-  ])
-  const [editingProduct, setEditingProduct] = useState(null)
-  const { setAuth } = useContext(AuthContext)
+  ]);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const dispatch = useDispatch();
 
   const handleAddProduct = (newProduct) => {
     if (editingProduct) {
-      setProducts(products.map(product => product.id === editingProduct.id ? newProduct : product))
-      setEditingProduct(null)
+      setProducts(products.map(product => product.id === editingProduct.id ? newProduct : product));
+      setEditingProduct(null);
     } else {
-      const nextId = products.length > 0 ? products[products.length - 1].id + 1 : 1
-      setProducts([...products, { ...newProduct, id: nextId }])
+      const nextId = products.length > 0 ? products[products.length - 1].id + 1 : 1;
+      setProducts([...products, { ...newProduct, id: nextId }]);
     }
-  }
+  };
 
   const handleEditProduct = (product) => {
-    setEditingProduct(product)
-  }
+    setEditingProduct(product);
+  };
 
   const handleDeleteProduct = (productId) => {
-    setProducts(products.filter(product => product.id !== productId))
-  }
+    setProducts(products.filter(product => product.id !== productId));
+  };
 
   const handleLogout = () => {
-    setAuth(false)
-  }
+    dispatch(logout());
+  };
 
   return (
     <div className={classes.dashboardContainer}>
@@ -86,14 +87,14 @@ const Dashboard = () => {
       <hr className={classes.divider} />
       <div className={classes.dashboardContent}>
         <div className={classes.formContainer}>
-          <ProductForm onAddProduct={handleAddProduct} editingProduct={editingProduct} />
+          <ProductForm existingProduct={editingProduct} onAddProduct={handleAddProduct} />
         </div>
         <div className={classes.listContainer}>
           <ProductList products={products} onEditProduct={handleEditProduct} onDeleteProduct={handleDeleteProduct} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

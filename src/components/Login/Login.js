@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../redux/authSlice';
 import classes from './Login.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Handle login logic here
     const storedUser = JSON.parse(localStorage.getItem('user'));
 
     if (storedUser && storedUser.email === email && storedUser.password === password) {
-      console.log('Login successful:', storedUser);
+      dispatch(login('dummyAuthToken')); // Use a dummy token for simplicity
       navigate('/dashboard');
     } else {
-      console.log('Invalid email or password');
       alert('Invalid email or password');
     }
   };
